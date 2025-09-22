@@ -47,6 +47,46 @@ body {
 .options button.incorrect {
     background-color: #ffaaa5; /* light red */
 }
+
+.action-button {
+    display: block;
+    width: 50%; /* Default width, will adjust for mobile */
+    margin: 1rem auto; /* Center the button */
+    padding: 12px 24px;
+    min-height: 44px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-decoration: none; /* For the reload button which is a link */
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .action-button {
+        width: 80%; /* Wider on smaller screens */
+    }
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: #666;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+}
 #word-list table {
     width: 100%;
     margin-top: 2rem;
