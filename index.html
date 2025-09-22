@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romence-Türkçe Kelime Oyunu</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="lib/papaparse.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="setup">
+            <h1>Romence Türkçe Kelime Oyunu</h1>
+            <button id="play-button">Başla</button>
+        </div>
+
+        <div id="game" class="hidden">
+            <p>Süre: <span id="timer">0</span>s</p>
+            <h2 id="romanian-word"></h2>
+            <div class="options" id="options"></div>
+        </div>
+
+        <div id="score" class="hidden">
+            <h1>Oyun Bitti!</h1>
+            <p>Skorunuz: <span id="final-score"></span>%</p>
+            <div id="word-list"></div>
+            <button onclick="location.reload()">Tekrar Oyna</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
