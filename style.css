@@ -178,3 +178,14 @@ footer {
     text-align: left;
     white-space: nowrap;
 }
+
+.dexonline-link {
+    text-decoration: none;
+    color: #007bff;
+    margin-left: 5px;
+    font-size: 0.8em;
+}
+
+.dexonline-link:hover {
+    color: #0056b3;
+}

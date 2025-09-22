@@ -24,6 +24,12 @@ let incorrectAnswers = 0;
 playButton.addEventListener('click', startGame);
 swapIcon.addEventListener('click', toggleGameMode);
 
+function getCleanWord(word) {
+    let cleanWord = word.split(',')[0];
+    cleanWord = cleanWord.split('(')[0];
+    return cleanWord.trim();
+}
+
 function toggleGameMode() {
     isRoToTrMode = !isRoToTrMode;
 
@@ -136,7 +142,7 @@ function displayOptions(options, correctAnswer) {
 function checkAnswer(selectedOption, correctAnswer) {
     const allButtons = optionsElement.querySelectorAll('button');
     allButtons.forEach(button => {
-        button.disabled = true; // Disable all buttons
+        button.disabled = true;
     });
 
     const selectedButton = optionsElement.querySelector(`[data-option="${selectedOption}"]`);
@@ -174,12 +180,18 @@ function endGame() {
     if (isRoToTrMode) {
         wordListHTML += '<tr><th>Romence Kelime</th><th>Türkçe Anlamı</th><th>Örnek Cümle</th></tr>';
         gameWords.forEach(word => {
-            wordListHTML += `<tr><td>${word['Romence Kelime']}</td><td>${word['Türkçe Anlamı']}</td><td>${word['Örnek Cümle']}</td></tr>`;
+            const romanianWord = word['Romence Kelime'];
+            const cleanRomanianWord = getCleanWord(romanianWord);
+            const dexonlineLink = `https://dexonline.ro/definitie/${cleanRomanianWord}/paradigma`;
+            wordListHTML += `<tr><td>${romanianWord} <a href="${dexonlineLink}" target="_blank" class="dexonline-link">🔗</a></td><td>${word['Türkçe Anlamı']}</td><td>${word['Örnek Cümle']}</td></tr>`;
         });
     } else {
         wordListHTML += '<tr><th>Türkçe Kelime</th><th>Romence Anlamı</th><th>Örnek Cümle</th></tr>';
         gameWords.forEach(word => {
-            wordListHTML += `<tr><td>${word['Türkçe Anlamı']}</td><td>${word['Romence Kelime']}</td><td>${word['Örnek Cümle']}</td></tr>`;
+            const romanianWord = word['Romence Kelime'];
+            const cleanRomanianWord = getCleanWord(romanianWord);
+            const dexonlineLink = `https://dexonline.ro/definitie/${cleanRomanianWord}/paradigma`;
+            wordListHTML += `<tr><td>${word['Türkçe Anlamı']}</td><td>${romanianWord} <a href="${dexonlineLink}" target="_blank" class="dexonline-link">🔗</a></td><td>${word['Örnek Cümle']}</td></tr>`;
         });
     }
     wordListHTML += '</table>';
