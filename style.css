@@ -41,17 +41,17 @@ body {
     background-color: #eee;
 }
 .options button.correct {
-    background-color: #a8e6cf; /* light green */
+    background-color: #a8e6cf;
 }
 
 .options button.incorrect {
-    background-color: #ffaaa5; /* light red */
+    background-color: #ffaaa5;
 }
 
 .action-button {
     display: block;
-    width: 50%; /* Default width, will adjust for mobile */
-    margin: 1rem auto; /* Center the button */
+    width: 50%;
+    margin: 1rem auto;
     padding: 12px 24px;
     min-height: 44px;
     border: 1px solid #ccc;
@@ -61,7 +61,7 @@ body {
     font-size: 1.2rem;
     cursor: pointer;
     box-sizing: border-box;
-    text-decoration: none; /* For the reload button which is a link */
+    text-decoration: none;
 }
 
 .action-button:hover {
@@ -70,7 +70,7 @@ body {
 
 @media (max-width: 768px) {
     .action-button {
-        width: 80%; /* Wider on smaller screens */
+        width: 80%;
     }
 }
 
@@ -80,13 +80,28 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.subtitle {
+#game-subtitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.2rem;
     font-weight: normal;
     color: #666;
     margin-top: 0;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    width: 100%;
+    height: 1.2rem;
+    overflow: hidden;
 }
+
+.mode-toggle {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #word-list table {
     width: 100%;
     margin-top: 2rem;
@@ -120,4 +135,46 @@ footer {
 
 .social-icons a:hover {
     color: #007bff;
+}
+
+#swap-icon {
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #007bff;
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+#swap-icon:hover,
+#swap-icon:focus {
+    color: #0056b3;
+    transform: translate(-50%, -50%) rotate(180deg);
+}
+
+#game-subtitle span {
+    transition: opacity 0.3s ease-in-out;
+}
+
+#game-subtitle span.fade-out {
+    opacity: 0;
+}
+
+#game-subtitle #lang1 {
+    position: absolute;
+    right: 50%;
+    transform: translateX(-45px);
+    text-align: right;
+    white-space: nowrap;
+}
+
+#game-subtitle #lang2 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(45px);
+    text-align: left;
+    white-space: nowrap;
 }

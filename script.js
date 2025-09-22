@@ -8,6 +8,12 @@ const incorrectCountElement = document.getElementById('incorrect-count');
 const romanianWordElement = document.getElementById('romanian-word');
 const optionsElement = document.getElementById('options');
 const finalScoreElement = document.getElementById('final-score');
+const gameSubtitleElement = document.getElementById('game-subtitle');
+const swapIcon = document.getElementById('swap-icon');
+const lang1Span = document.getElementById('lang1');
+const lang2Span = document.getElementById('lang2');
+
+let isRoToTrMode = true;
 
 let words = [];
 let gameWords = [];
@@ -16,6 +22,27 @@ let correctAnswers = 0;
 let incorrectAnswers = 0;
 
 playButton.addEventListener('click', startGame);
+swapIcon.addEventListener('click', toggleGameMode);
+
+function toggleGameMode() {
+    isRoToTrMode = !isRoToTrMode;
+
+    lang1Span.classList.add('fade-out');
+    lang2Span.classList.add('fade-out');
+
+    setTimeout(() => {
+        if (isRoToTrMode) {
+            lang1Span.textContent = 'Romence🇷🇴';
+            lang2Span.textContent = 'Türkçe🇹🇷';
+        } else {
+            lang1Span.textContent = 'Türkçe🇹🇷';
+            lang2Span.textContent = 'Romence🇷🇴';
+        }
+        lang1Span.classList.remove('fade-out');
+        lang2Span.classList.remove('fade-out');
+    }, 300); // Match this duration with the CSS transition duration
+}
+
 
 async function startGame() {
     const wordCount = 10;
@@ -30,7 +57,6 @@ async function startGame() {
         alert('Oynayacak kelime yok. Lütfen sözlük dosyasını kontrol edin.');
         return;
     }
-
 
     setupSection.classList.add('hidden');
     gameSection.classList.remove('hidden');
@@ -58,19 +84,37 @@ function showNextWord() {
 
     updateStats();
     const word = gameWords[currentWordIndex];
-    romanianWordElement.textContent = word['Romence Kelime'];
 
-    const correctAnswer = word['Türkçe Anlamı'];
+    let questionWord, correctAnswer;
+
+    if (isRoToTrMode) {
+        questionWord = word['Romence Kelime'];
+        correctAnswer = word['Türkçe Anlamı'];
+    } else {
+        questionWord = word['Türkçe Anlamı'];
+        correctAnswer = word['Romence Kelime'];
+    }
     const wordType = word['Kelime Türü'];
+
+    romanianWordElement.textContent = questionWord;
 
     const options = getOptions(correctAnswer, wordType);
     displayOptions(options, correctAnswer);
 }
 
 function getOptions(correctAnswer, wordType) {
-    const sameTypeWords = words.filter(w => w['Kelime Türü'] === wordType && w['Türkçe Anlamı'] !== correctAnswer);
+    let correctAnswerKey, wrongOptionKey;
+    if (isRoToTrMode) {
+        correctAnswerKey = 'Türkçe Anlamı';
+        wrongOptionKey = 'Türkçe Anlamı';
+    } else {
+        correctAnswerKey = 'Romence Kelime';
+        wrongOptionKey = 'Romence Kelime';
+    }
+
+    const sameTypeWords = words.filter(w => w['Kelime Türü'] === wordType && w[wrongOptionKey] !== correctAnswer);
     const shuffled = sameTypeWords.sort(() => 0.5 - Math.random());
-    const wrongOptions = shuffled.slice(0, 3).map(w => w['Türkçe Anlamı']);
+    const wrongOptions = shuffled.slice(0, 3).map(w => w[wrongOptionKey]);
 
     const options = [correctAnswer, ...wrongOptions];
     return options.sort(() => 0.5 - Math.random());
@@ -127,10 +171,17 @@ function endGame() {
 
     const wordListElement = document.getElementById('word-list');
     let wordListHTML = '<h2>Oyundaki Kelimeler</h2><table>';
-    wordListHTML += '<tr><th>Romence Kelime</th><th>Türkçe Anlamı</th><th>Örnek Cümle</th></tr>';
-    gameWords.forEach(word => {
-        wordListHTML += `<tr><td>${word['Romence Kelime']}</td><td>${word['Türkçe Anlamı']}</td><td>${word['Örnek Cümle']}</td></tr>`;
-    });
+    if (isRoToTrMode) {
+        wordListHTML += '<tr><th>Romence Kelime</th><th>Türkçe Anlamı</th><th>Örnek Cümle</th></tr>';
+        gameWords.forEach(word => {
+            wordListHTML += `<tr><td>${word['Romence Kelime']}</td><td>${word['Türkçe Anlamı']}</td><td>${word['Örnek Cümle']}</td></tr>`;
+        });
+    } else {
+        wordListHTML += '<tr><th>Türkçe Kelime</th><th>Romence Anlamı</th><th>Örnek Cümle</th></tr>';
+        gameWords.forEach(word => {
+            wordListHTML += `<tr><td>${word['Türkçe Anlamı']}</td><td>${word['Romence Kelime']}</td><td>${word['Örnek Cümle']}</td></tr>`;
+        });
+    }
     wordListHTML += '</table>';
     wordListElement.innerHTML = wordListHTML;
 }
