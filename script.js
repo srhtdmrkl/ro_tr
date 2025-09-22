@@ -2,7 +2,9 @@ const setupSection = document.getElementById('setup');
 const gameSection = document.getElementById('game');
 const scoreSection = document.getElementById('score');
 const playButton = document.getElementById('play-button');
-const timerElement = document.getElementById('timer');
+const remainingWordsElement = document.getElementById('remaining-words');
+const correctCountElement = document.getElementById('correct-count');
+const incorrectCountElement = document.getElementById('incorrect-count');
 const romanianWordElement = document.getElementById('romanian-word');
 const optionsElement = document.getElementById('options');
 const finalScoreElement = document.getElementById('final-score');
@@ -11,7 +13,7 @@ let words = [];
 let gameWords = [];
 let currentWordIndex = 0;
 let correctAnswers = 0;
-let timerInterval;
+let incorrectAnswers = 0;
 
 playButton.addEventListener('click', startGame);
 
@@ -33,7 +35,7 @@ async function startGame() {
     setupSection.classList.add('hidden');
     gameSection.classList.remove('hidden');
 
-    startTimer();
+    updateStats();
     showNextWord();
 }
 
@@ -54,6 +56,7 @@ function showNextWord() {
         return;
     }
 
+    updateStats();
     const word = gameWords[currentWordIndex];
     romanianWordElement.textContent = word['Romence Kelime'];
 
@@ -97,24 +100,23 @@ function checkAnswer(selectedOption, correctAnswer) {
         correctAnswers++;
         selectedButton.classList.add('correct');
     } else {
+        incorrectAnswers++;
         selectedButton.classList.add('incorrect');
         correctButton.classList.add('correct');
     }
 
     currentWordIndex++;
+    updateStats();
     setTimeout(showNextWord, 1000); // Wait 1 second before next word
 }
 
-function startTimer() {
-    let seconds = 0;
-    timerInterval = setInterval(() => {
-        seconds++;
-        timerElement.textContent = seconds;
-    }, 1000);
+function updateStats() {
+    remainingWordsElement.textContent = gameWords.length - currentWordIndex;
+    correctCountElement.textContent = correctAnswers;
+    incorrectCountElement.textContent = incorrectAnswers;
 }
 
 function endGame() {
-    clearInterval(timerInterval);
     gameSection.classList.add('hidden');
     scoreSection.classList.remove('hidden');
 

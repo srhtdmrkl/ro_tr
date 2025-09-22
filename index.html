@@ -6,16 +6,22 @@
     <title>Romence-Türkçe Kelime Oyunu</title>
     <link rel="stylesheet" href="style.css">
     <script src="lib/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div id="setup">
-            <h1>Romence Türkçe Kelime Oyunu</h1>
+            <h2>Romence🇷🇴 Türkçe🇹🇷</h2>
+            <h2>Kelime Oyunu</h2>
             <button id="play-button">Başla</button>
         </div>
 
         <div id="game" class="hidden">
-            <p>Süre: <span id="timer">0</span>s</p>
+            <div class="game-stats">
+                <p>Kalan: <span id="remaining-words">0</span></p>
+                <p>Doğru: <span id="correct-count">0</span></p>
+                <p>Yanlış: <span id="incorrect-count">0</span></p>
+            </div>
             <h2 id="romanian-word"></h2>
             <div class="options" id="options"></div>
         </div>
@@ -29,5 +35,14 @@
     </div>
 
     <script src="script.js"></script>
+
+    <footer>
+        <p>© 2025 Serhat Demirkol</p>
+        <div class="social-icons">
+            <a href="mailto:srhtdmrkl@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="http://linkedin.com/in/srhtdmrkl" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="http://github.com/srhtdmrkl" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </footer>
 </body>
 </html>
