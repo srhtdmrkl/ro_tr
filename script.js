@@ -77,7 +77,9 @@ function getOptions(correctAnswer, wordType) {
 }
 
 function displayOptions(options, correctAnswer) {
-    optionsElement.innerHTML = '';
+    while (optionsElement.firstChild) {
+        optionsElement.removeChild(optionsElement.firstChild);
+    }
     options.forEach(option => {
         const button = document.createElement('button');
         button.textContent = option;
