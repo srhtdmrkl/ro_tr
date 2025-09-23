@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +9,23 @@
     <script src="lib/papaparse.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-44XH1XS4EB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-44XH1XS4EB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-  gtag('config', 'G-44XH1XS4EB');
-</script>
+        gtag('config', 'G-44XH1XS4EB');
+    </script>
 </head>
+
 <body>
     <div class="container">
         <div id="setup">
             <h2 class="main-title">Kelime Oyunu</h2>
-            <h2 class="subtitle" id="game-subtitle"><span id="lang1">Romence🇷🇴</span> <span id="swap-icon">⇄</span> <span id="lang2">Türkçe🇹🇷</span></h2>
-            <button id="play-button" class="action-button">Başla</button>
+            <h2 class="subtitle" id="game-subtitle"><span id="lang1">Romence🇷🇴</span> <span id="swap-icon">⇄</span>
+                <span id="lang2">Türkçe🇹🇷</span></h2>
+            <button id="play-button" class="action-button" onclick="gtag('event', 'game_start');">Başla</button>
         </div>
 
         <div id="game" class="hidden">
@@ -39,7 +42,7 @@
             <h1>Oyun Bitti!</h1>
             <p>Skorunuz: <span id="final-score"></span>%</p>
             <div id="word-list"></div>
-            <button onclick="location.reload()" class="action-button">Tekrar Oyna</button>
+            <button onclick="gtag('event', 'game_restart'); location.reload()" class="action-button">Tekrar Oyna</button>
         </div>
     </div>
 
@@ -48,10 +51,11 @@
     <footer>
         <p>© 2025 Serhat Demirkol</p>
         <div class="social-icons">
-            <a href="mailto:srhtdmrkl@gmail.com"><i class="fas fa-envelope"></i></a>
-            <a href="https://www.linkedin.com/in/serhatdemirkol" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="http://github.com/srhtdmrkl" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="mailto:srhtdmrkl@gmail.com" onclick="gtag('event', 'social_click', {'platform': 'email'});"><i class="fas fa-envelope"></i></a>
+            <a href="https://www.linkedin.com/in/serhatdemirkol" target="_blank" onclick="gtag('event', 'social_click', {'platform': 'linkedin'});"><i class="fab fa-linkedin"></i></a>
+            <a href="http://github.com/srhtdmrkl" target="_blank" onclick="gtag('event', 'social_click', {'platform': 'github'});"><i class="fab fa-github"></i></a>
         </div>
     </footer>
 </body>
+
 </html>

@@ -183,7 +183,7 @@ function endGame() {
             const romanianWord = word['Romence Kelime'];
             const cleanRomanianWord = getCleanWord(romanianWord);
             const dexonlineLink = `https://dexonline.ro/definitie/${cleanRomanianWord}/paradigma`;
-            wordListHTML += `<tr><td>${romanianWord} <a href="${dexonlineLink}" target="_blank" class="dexonline-link">🔗</a></td><td>${word['Türkçe Anlamı']}</td><td>${word['Örnek Cümle']}</td></tr>`;
+            wordListHTML += `<tr><td>${romanianWord} <a href="${dexonlineLink}" target="_blank" class="dexonline-link" onclick="gtag('event', 'dexonline_link_click');">🔗</a></td><td>${word['Türkçe Anlamı']}</td><td>${word['Örnek Cümle']}</td></tr>`;
         });
     } else {
         wordListHTML += '<tr><th>Türkçe Kelime</th><th>Romence Anlamı</th><th>Örnek Cümle</th></tr>';
@@ -191,7 +191,7 @@ function endGame() {
             const romanianWord = word['Romence Kelime'];
             const cleanRomanianWord = getCleanWord(romanianWord);
             const dexonlineLink = `https://dexonline.ro/definitie/${cleanRomanianWord}/paradigma`;
-            wordListHTML += `<tr><td>${word['Türkçe Anlamı']}</td><td>${romanianWord} <a href="${dexonlineLink}" target="_blank" class="dexonline-link">🔗</a></td><td>${word['Örnek Cümle']}</td></tr>`;
+            wordListHTML += `<tr><td>${word['Türkçe Anlamı']}</td><td>${romanianWord} <a href="${dexonlineLink}" target="_blank" class="dexonline-link" onclick="gtag('event', 'dexonline_link_click');">🔗</a></td><td>${word['Örnek Cümle']}</td></tr>`;
         });
     }
     wordListHTML += '</table>';
