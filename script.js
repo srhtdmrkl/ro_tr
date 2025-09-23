@@ -167,7 +167,6 @@ function checkAnswer(selectedOption, correctAnswer) {
 }
 
 let voices = [];
-let notifiedAboutMissingVoice = false;
 
 function populateVoiceList() {
     voices = window.speechSynthesis.getVoices();
@@ -179,20 +178,17 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
 }
 
 function speak(word) {
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = 'ro-RO';
-
     const romanianVoice = voices.find(voice => voice.lang === 'ro-RO');
 
     if (romanianVoice) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'ro-RO';
         utterance.voice = romanianVoice;
-    } else if (!notifiedAboutMissingVoice) {
-                alert('Cihazınızda Romence ses paketi bulunamadı. Doğru telaffuz için, lütfen cihazınızın metin okuma ayarlarından Romence bir ses yükleyin.');
-        notifiedAboutMissingVoice = true;
+        window.speechSynthesis.speak(utterance);
+        gtag('event', 'speak_word', { 'word': word });
+    } else {
+        alert('Cihazınızda Romence ses paketi bulunamadı. Doğru telaffuz için, lütfen cihazınızın metin okuma ayarlarından Romence bir ses yükleyin.');
     }
-
-    window.speechSynthesis.speak(utterance);
-    gtag('event', 'speak_word', { 'word': word });
 }
 
 function speakWordInList(event) {
