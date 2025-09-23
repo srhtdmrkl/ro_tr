@@ -12,6 +12,7 @@ const gameSubtitleElement = document.getElementById('game-subtitle');
 const swapIcon = document.getElementById('swap-icon');
 const lang1Span = document.getElementById('lang1');
 const lang2Span = document.getElementById('lang2');
+const speakButton = document.getElementById('speak-button');
 
 let isRoToTrMode = true;
 
@@ -96,9 +97,12 @@ function showNextWord() {
     if (isRoToTrMode) {
         questionWord = word['Romence Kelime'];
         correctAnswer = word['Türkçe Anlamı'];
+        speakButton.classList.remove('hidden');
+        speakButton.onclick = () => speak(getCleanWord(questionWord));
     } else {
         questionWord = word['Türkçe Anlamı'];
         correctAnswer = word['Romence Kelime'];
+        speakButton.classList.add('hidden');
     }
     const wordType = word['Kelime Türü'];
 
@@ -162,6 +166,18 @@ function checkAnswer(selectedOption, correctAnswer) {
     setTimeout(showNextWord, 1000); // Wait 1 second before next word
 }
 
+function speak(word) {
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'ro-RO';
+    window.speechSynthesis.speak(utterance);
+    gtag('event', 'speak_word', { 'word': word });
+}
+
+function speakWordInList(event) {
+    const word = event.target.closest('tr').dataset.word;
+    speak(word);
+}
+
 function updateStats() {
     remainingWordsElement.textContent = gameWords.length - currentWordIndex;
     correctCountElement.textContent = correctAnswers;
@@ -183,7 +199,7 @@ function endGame() {
             const romanianWord = word['Romence Kelime'];
             const cleanRomanianWord = getCleanWord(romanianWord);
             const dexonlineLink = `https://dexonline.ro/definitie/${cleanRomanianWord}/paradigma`;
-            wordListHTML += `<tr><td>${romanianWord} <a href="${dexonlineLink}" target="_blank" class="dexonline-link" onclick="gtag('event', 'dexonline_link_click');">🔗</a></td><td>${word['Türkçe Anlamı']}</td><td>${word['Örnek Cümle']}</td></tr>`;
+            wordListHTML += `<tr data-word="${cleanRomanianWord}"><td>${romanianWord} <button class="speak-button-list" onclick="speakWordInList(event)"><i class="fas fa-volume-up"></i></button> <a href="${dexonlineLink}" target="_blank" class="dexonline-link" onclick="gtag('event', 'dexonline_link_click');">🔗</a></td><td>${word['Türkçe Anlamı']}</td><td>${word['Örnek Cümle']}</td></tr>`;
         });
     } else {
         wordListHTML += '<tr><th>Türkçe Kelime</th><th>Romence Anlamı</th><th>Örnek Cümle</th></tr>';
@@ -191,7 +207,7 @@ function endGame() {
             const romanianWord = word['Romence Kelime'];
             const cleanRomanianWord = getCleanWord(romanianWord);
             const dexonlineLink = `https://dexonline.ro/definitie/${cleanRomanianWord}/paradigma`;
-            wordListHTML += `<tr><td>${word['Türkçe Anlamı']}</td><td>${romanianWord} <a href="${dexonlineLink}" target="_blank" class="dexonline-link" onclick="gtag('event', 'dexonline_link_click');">🔗</a></td><td>${word['Örnek Cümle']}</td></tr>`;
+            wordListHTML += `<tr data-word="${cleanRomanianWord}"><td>${word['Türkçe Anlamı']}</td><td>${romanianWord} <button class="speak-button-list" onclick="speakWordInList(event)"><i class="fas fa-volume-up"></i></button> <a href="${dexonlineLink}" target="_blank" class="dexonline-link" onclick="gtag('event', 'dexonline_link_click');">🔗</a></td><td>${word['Örnek Cümle']}</td></tr>`;
         });
     }
     wordListHTML += '</table>';

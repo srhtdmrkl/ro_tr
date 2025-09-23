@@ -24,6 +24,13 @@ body {
     justify-content: space-around;
     margin-bottom: 1rem;
 }
+
+.word-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
 .options button {
     display: block;
     width: 100%;
@@ -187,5 +194,35 @@ footer {
 }
 
 .dexonline-link:hover {
+    color: #0056b3;
+}
+
+.speak-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-left: 10px;
+}
+
+.speak-button:hover {
+    color: #0056b3;
+}
+
+.speak-button:active {
+    transform: scale(0.9);
+}
+
+.speak-button-list {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #007bff;
+    margin-left: 5px;
+}
+
+.speak-button-list:hover {
     color: #0056b3;
 }
