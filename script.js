@@ -178,11 +178,19 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
 }
 
 function speak(word) {
-    const romanianVoice = voices.find(voice => voice.lang === 'ro-RO');
+    let romanianVoice = voices.find(voice => voice.lang === 'ro_RO'); // Android
+
+    if (!romanianVoice) {
+        romanianVoice = voices.find(voice => voice.lang === 'ro-RO'); // macOS/iOS
+    }
+
+    if (!romanianVoice) {
+        romanianVoice = voices.find(voice => voice.lang === 'ro'); // Generic fallback
+    }
 
     if (romanianVoice) {
         const utterance = new SpeechSynthesisUtterance(word);
-        utterance.lang = 'ro-RO';
+        utterance.lang = romanianVoice.lang;
         utterance.voice = romanianVoice;
         window.speechSynthesis.speak(utterance);
         gtag('event', 'speak_word', { 'word': word });
