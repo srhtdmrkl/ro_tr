@@ -13,6 +13,7 @@ const swapIcon = document.getElementById('swap-icon');
 const lang1Span = document.getElementById('lang1');
 const lang2Span = document.getElementById('lang2');
 const speakButton = document.getElementById('speak-button');
+const wordCountElement = document.querySelector('.word-count');
 
 let isRoToTrMode = true;
 
@@ -21,6 +22,15 @@ let gameWords = [];
 let currentWordIndex = 0;
 let correctAnswers = 0;
 let incorrectAnswers = 0;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log("DOM Content Loaded");
+    await fetchAndParseCSV();
+    console.log("wordCountElement:", wordCountElement);
+    console.log("words:", words);
+    console.log("words.length:", words.length);
+    wordCountElement.textContent = `${words.length} kelime`;
+});
 
 playButton.addEventListener('click', startGame);
 swapIcon.addEventListener('click', toggleGameMode);
@@ -54,8 +64,6 @@ function toggleGameMode() {
 async function startGame() {
     const wordCount = 10;
 
-    await fetchAndParseCSV();
-
     gameWords = getRandomWords(words, wordCount);
     if (gameWords.length < wordCount) {
         alert(`Sözlükte isteğiniz için yeterli kelime yok. ${gameWords.length} kelime ile oynanıyor.`);
@@ -73,9 +81,16 @@ async function startGame() {
 }
 
 async function fetchAndParseCSV() {
-    const response = await fetch('Short_Dictionary_RO.csv');
+    if (words.length > 0) return;
+    const response = await fetch('wordlist.csv');
     const data = await response.text();
-    words = Papa.parse(data, { header: true }).data;
+    const result = Papa.parse(data, { header: true, skipEmptyLines: true });
+    if (result.errors.length > 0) {
+        console.error("Parsing errors:", result.errors);
+        alert("Sözlük dosyası okunurken bir hata oluştu. Lütfen konsolu kontrol edin.");
+        return;
+    }
+    words = result.data;
 }
 
 function getRandomWords(sourceArray, count) {
