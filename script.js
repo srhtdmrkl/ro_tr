@@ -114,6 +114,7 @@ function showNextWord() {
         correctAnswer = word['Türkçe Anlamı'];
         speakButton.classList.remove('hidden');
         speakButton.onclick = () => speak(getCleanWord(questionWord));
+        speak(getCleanWord(questionWord));
     } else {
         questionWord = word['Türkçe Anlamı'];
         correctAnswer = word['Romence Kelime'];
